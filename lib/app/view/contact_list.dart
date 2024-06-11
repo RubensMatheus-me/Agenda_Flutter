@@ -8,14 +8,16 @@ class ContactList extends StatelessWidget{
     {'nome':'Joana','telefone':'(11) 9 9562-3356','avatar':'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'},
   ];
 
+  ContactList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Contatos'),
+        title: const Text('Lista de Contatos'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed:() {
               Navigator.of(context).pushNamed(MyApp.CONTACT_FORM);
             }
@@ -31,9 +33,9 @@ class ContactList extends StatelessWidget{
             leading: avatar,
             title: Text(contact['nome']  ?? 'Unknown Contact'),
             subtitle: Text(contact['telefone']?? 'No phone number'),
-            trailing: Container(
+            trailing: const SizedBox(
               width: 100,
-              child: const Row(
+              child: Row(
                 children: [
                   IconButton(icon: Icon(Icons.edit), onPressed: null,),
                   IconButton(icon: Icon(Icons.delete), onPressed: null,),

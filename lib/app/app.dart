@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        HOME: (context) => ContactList(),
-        CONTACT_FORM: (context) => ContactForm()
+        HOME: (context) =>  ContactList(),
+        CONTACT_FORM: (context) =>  ContactForm()
       },
     );
   }
