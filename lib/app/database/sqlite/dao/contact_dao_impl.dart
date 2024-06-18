@@ -10,6 +10,7 @@ class ContactDAOImpl implements ContactDAO{
   Future<List<Contact>> find() async {
     _db = await Connection.get();
     _db?.query('contact');
+
     List<Map<String,dynamic>> result = await _db!.query('contact');
     List<Contact> list = List.generate(result.length, (i) {
       var line = result[i];

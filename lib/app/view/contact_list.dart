@@ -6,6 +6,7 @@ import 'package:flutter_agenda/app/domain/entities/contact.dart';
 class ContactList extends StatelessWidget{
 
   Future<List<Contact>?> _search() async {
+    
     try {
       return ContactDAOImpl().find();
 
