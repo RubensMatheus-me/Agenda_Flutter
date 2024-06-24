@@ -32,7 +32,7 @@ goToForm(BuildContext context, [Contact ?contact]) {
   Navigator.of(context).pushNamed(MyApp.CONTACT_FORM, arguments: contact).then(refreshList);
 }
 //excluir
-remove(int id) {
+remove(int ?id) {
   _service.remove(id);
   refreshList();
 }

@@ -13,15 +13,18 @@ class ContactService{
     _dao.save(contact);
   }
 
-  remove(int id) {
-    _dao.remove(id);
+  remove(int? id) {
+    if (id == null) {
+    throw DomainLayerException("ID cannot be null");
+  }
+  _dao.remove(id);
   }
 
-  Future<List<Contact>>find() {
+  Future<List<Contact>> find() {
     return _dao.find();
   }
 
-  validateName(String name) {
+  validateName(String? name) {
     var min = 3;
     var max = 50;
 
@@ -33,7 +36,7 @@ class ContactService{
       throw DomainLayerException('O nome deve possuir no maximo $max caracteres.');
     }
   }
-  validateEmail(String email) {
+  validateEmail(String? email) {
     if(email == null) {
       throw DomainLayerException('O email é obrigatorio.');
     }else if(!email.contains('@')){
@@ -41,7 +44,7 @@ class ContactService{
     }
   }
 
-  validatePhone(String phone) {
+  validatePhone(String? phone) {
     var format = RegExp(r'^\([1-9]{2}\) [9] [6-9]{1}[0-9]{3}\-[0-9]{4}$');
     if(phone == null) {
       throw DomainLayerException('O telefone é obrigatorio.');
