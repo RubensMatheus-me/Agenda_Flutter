@@ -1,30 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_agenda/app/app.dart';
-import 'package:flutter_agenda/app/database/sqlite/dao/contact_dao_impl.dart';
 import 'package:flutter_agenda/app/domain/entities/contact.dart';
+import 'package:flutter_agenda/app/view/contact_list_back.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ContactList extends StatelessWidget{
 
-  Future<List<Contact>?> _search() async {
+  final _back = ContactListBack();
     
-    try {
-      return ContactDAOImpl().find();
-
+  CircleAvatar circleAvatar(String url) {
+    try{
+      return CircleAvatar(backgroundImage: NetworkImage(url));
     }catch(e) {
-      print('Erro ao acessar o banco de dados $e');
-      return null;
+      return const CircleAvatar(child: Icon(Icons.person));
     }
   }
+  Widget iconEditButton(Function()? onPressed) {
+    return IconButton(
+      icon: Icon(Icons.edit),
+      color: Colors.orange,
+      onPressed: onPressed);
+  }
+
+  Widget iconRemoveButton(BuildContext context, Function()? remove) {
+    return IconButton(
+      icon: Icon(Icons.delete),
+      color: Colors.red,
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Excluir'),
+            content: Text('Confirmar a Exclusão?'),
+            actions: [
+              TextButton(
+                child: Text('Não'),
+                onPressed: () {
+                  Navigator.of(context).pop();//fechar confirmaçao
+                },
+              ),
+              TextButton(
+                child: Text('Sim'),
+                onPressed: remove, //cojfirmar remoção
+              ),
+            ],
+          )
+        );
+      },
+    );
+  }
+      
 
   @override
   Widget build(BuildContext context) {
-
-    return FutureBuilder(
-      future:  _search(),
-      builder: (context, future) {
-        if(future.hasData) {
-          List<Contact>? list = future.data;
-          return Scaffold(
+    return Scaffold(
             appBar: AppBar(
               title: const Text('Lista de Contatos'),
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -34,34 +63,48 @@ class ContactList extends StatelessWidget{
                   onPressed:() {
                     Navigator.of(context).pushNamed(MyApp.CONTACT_FORM);
                   }
-                  )
+                )
               ],
             ),
-            body: ListView.builder (
-              itemCount: list?.length,
-              itemBuilder:(context, i){
-                var contact = list?[i];
-                var avatar =  CircleAvatar( backgroundImage: NetworkImage(contact?.url_avatar ?? 'Dont have avatar'),);
-                return ListTile(
-                  leading: avatar,
-                  title: Text(contact?.nome  ?? 'Unknown Contact'),
-                  subtitle: Text(contact?.telefone?? 'No phone number'),
-                  trailing: const SizedBox(
-                    width: 100,
-                    child: Row(
-                      children: [
-                        IconButton(icon: Icon(Icons.edit), onPressed: null,),
-                        IconButton(icon: Icon(Icons.delete), onPressed: null,),
-                      ],
-                      ),
-                  ),
-                );
-              },
+            body: Observer(builder: (context) {
+              return FutureBuilder(
+                future: _back.list,
+                builder: (context, future) {
+                  if(!future.hasData) {
+                    return const CircularProgressIndicator();
+                  } else {
+                      List<Contact>? list = future.data;    
+                      return ListView.builder (
+                        itemCount: list?.length,
+                        itemBuilder:(context, i){
+                          var contact = list?[i];
+                          return ListTile(
+                            leading: circleAvatar(contact?.url_avatar ?? ''),
+                            title: Text(contact?.nome  ?? 'Unknown Contact'),
+                            subtitle: Text(contact?.telefone?? 'No phone number'),
+                            trailing: SizedBox(
+                              width: 100,
+                              child: Row(
+                                children: [
+                                  iconEditButton(() {
+                                    _back.goToForm(context, contact);
+                                  }),
+                                  iconRemoveButton(context, () {
+                                    _back.remove(contact!.id);
+                                    Navigator.of(context).pop();
+                                  })
+                                ],
+                              ),   
+                            ),
+                          );
+                        },
+                      );
+                  }
+                }
+              );
+            }
             )
-          );
-        }else {
-          return Scaffold();
-        }
-      });
+    );
+                  
   }
 }

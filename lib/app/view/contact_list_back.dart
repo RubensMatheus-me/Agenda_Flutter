@@ -23,6 +23,7 @@ abstract class _ContactListBack with Store{
 refreshList([dynamic value]) {
   list = _service.find();
 }
+
 _ContactListBack(){
   refreshList();
 }

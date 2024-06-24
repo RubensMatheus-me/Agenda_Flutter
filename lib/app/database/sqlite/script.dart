@@ -2,7 +2,7 @@
 
 final create_table = '''
   CREATE TABLE contact(
-    id INTEGER PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY,
     nome VARCHAR(200) NOT NULL,
     telefone VARCHAR(16) NOT NULL,
     email VARCHAR(150) NOT NULL,

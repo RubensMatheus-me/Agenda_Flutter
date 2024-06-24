@@ -9,17 +9,17 @@ class ContactDAOImpl implements ContactDAO{
   @override
   Future<List<Contact>> find() async {
     _db = await Connection.get();
-    _db?.query('contact');
+    //_db?.query('contact');
 
     List<Map<String,dynamic>> result = await _db!.query('contact');
     List<Contact> list = List.generate(result.length, (i) {
       var line = result[i];
       return Contact(
-      id: line['id'],
-      nome: line['nome'],
-      telefone: line['telefone'],
-      email: line['email'],
-      url_avatar: line['url_avatar'],
+        id: line['id'],
+        nome: line['nome'],
+        telefone: line['telefone'],
+        email: line['email'],
+        url_avatar: line['url_avatar'],
       
       );
     }
@@ -28,23 +28,23 @@ class ContactDAOImpl implements ContactDAO{
   }
 
   @override
-  remove(int id) async {
+  Future<void> remove(int id) async {
     _db = await Connection.get();
     var sql = 'DELETE FROM contact WHERE id = ?';
-    _db?.rawDelete(sql[id]);
+    await _db?.rawDelete(sql, [id]);
 
   }
 
   @override
-  save(Contact contact) async {
+  Future<void> save(Contact contact) async {
     _db = await Connection.get();
     var sql;
     if(contact.id == null) {
       sql = 'INSERT INTO contact (nome, telefone, email, url_avatar) VALUES(?, ?, ?, ?)';
-      _db?.rawInsert(sql,[contact.nome, contact.telefone, contact.email, contact.url_avatar]);
+      await _db?.rawInsert(sql,[contact.nome, contact.telefone, contact.email, contact.url_avatar]);
     }else {
       sql = 'UPDATE contact SET nome = ?, telefone = ?, email = ?, url_avatar = ?, WHERE id = ?';
-      _db?.rawUpdate(sql,[contact.nome, contact.telefone, contact.email, contact.url_avatar, contact.id]);
+      await _db?.rawUpdate(sql,[contact.nome, contact.telefone, contact.email, contact.url_avatar, contact.id]);
     }
   }
 
