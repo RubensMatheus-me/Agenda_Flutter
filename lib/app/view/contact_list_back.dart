@@ -28,8 +28,9 @@ _ContactListBack(){
   refreshList();
 }
 //ter um metodo para chamar o form salvar/alterar
-goToForm(BuildContext context, [Contact ?contact]) {
-  Navigator.of(context).pushNamed(MyApp.CONTACT_FORM, arguments: contact).then(refreshList);
+goToForm(BuildContext context, [Contact? contact]) {
+ Navigator.of(context).pushNamed(MyApp.CONTACT_FORM, arguments: contact).then(refreshList);
+
 }
 //excluir
 remove(int ?id) {

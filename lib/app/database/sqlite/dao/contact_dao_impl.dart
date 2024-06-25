@@ -31,20 +31,21 @@ class ContactDAOImpl implements ContactDAO{
   Future<void> remove(int id) async {
     _db = await Connection.get();
     var sql = 'DELETE FROM contact WHERE id = ?';
-    await _db?.rawDelete(sql, [id]);
+    _db?.rawDelete(sql, [id]);
 
   }
 
   @override
-  Future<void> save(Contact contact) async {
+  save(Contact contact) async {
     _db = await Connection.get();
     var sql;
+
     if(contact.id == null) {
-      sql = 'INSERT INTO contact (nome, telefone, email, url_avatar) VALUES(?, ?, ?, ?)';
-      await _db?.rawInsert(sql,[contact.nome, contact.telefone, contact.email, contact.url_avatar]);
+      sql = 'INSERT INTO contact (nome, telefone, email, url_avatar) VALUES (?, ?, ?, ?)';
+      _db?.rawInsert(sql, [contact.nome, contact.telefone, contact.email, contact.url_avatar]);
     }else {
-      sql = 'UPDATE contact SET nome = ?, telefone = ?, email = ?, url_avatar = ?, WHERE id = ?';
-      await _db?.rawUpdate(sql,[contact.nome, contact.telefone, contact.email, contact.url_avatar, contact.id]);
+      sql = 'UPDATE contact SET nome = ?, telefone = ?, email = ?, url_avatar = ? WHERE id = ?';
+      _db?.rawUpdate(sql,[contact.nome, contact.telefone, contact.email, contact.url_avatar, contact.id]);
     }
   }
 

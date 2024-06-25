@@ -31,7 +31,7 @@ class ContactService{
     if(name == null) {
       throw DomainLayerException('O nome é obrigatorio.');
     }else if(name.length < min) {
-      throw DomainLayerException('O nome deve possuit pelo menos $min caracteres.');
+      throw DomainLayerException('O nome deve possuir pelo menos $min caracteres.');
     }else if(name.length > max) {
       throw DomainLayerException('O nome deve possuir no maximo $max caracteres.');
     }
@@ -49,7 +49,7 @@ class ContactService{
     if(phone == null) {
       throw DomainLayerException('O telefone é obrigatorio.');
     }else if(!format.hasMatch(phone)) {
-      throw DomainLayerException('Formato inválido. O formato deve ser: (99) 9 9999-9999');
+      throw DomainLayerException('Formato inválido. O formato deve ser: (99) 9 9999-9999.');
     }
 
     //serviço de dominio
