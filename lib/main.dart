@@ -13,5 +13,5 @@ Future main() async {
   }
   databaseFactory = databaseFactoryFfi;
   setupInjection();
-  runApp(const MyApp());
+  runApp(MyApp());
 }

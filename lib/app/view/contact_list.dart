@@ -80,6 +80,9 @@ class ContactList extends StatelessWidget{
                           return ListTile(
                             leading: circleAvatar(contact?.url_avatar ?? ''),
                             title: Text(contact?.nome  ?? 'Unknown Contact'),
+                            onTap: () {
+                             _back.goToDetails(context);
+                            },
                             subtitle: Text(contact?.telefone?? 'No phone number'),
                             trailing: SizedBox(
                               width: 100,

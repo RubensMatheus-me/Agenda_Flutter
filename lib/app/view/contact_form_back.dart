@@ -1,31 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_agenda/app/domain/exception/domain_layer_exception.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mobx/mobx.dart';
 
 import '../domain/entities/contact.dart';
 import '../domain/services/contact_service.dart';
 
-part 'contact_form_back.g.dart';
 
-class ContactFormBack = _ContactFormBack with _$ContactFormBack;
 
-abstract class _ContactFormBack with Store{
-  late Contact contact;
+class ContactFormBack {
+  Contact contact = Contact();
   var _service = GetIt.I.get<ContactService>();
 
-  @observable
   bool _nameIsValid = false;
-  @observable
   bool _emailIsValid = false;
-  @observable
   bool _phoneIsValid = false;
 
-  @computed
   bool get isValid => _nameIsValid && _emailIsValid && _phoneIsValid;
 
-    //diferenciar novo com alteração
-  _ContactFormBack (BuildContext context) {
+  //diferenciar novo com alteração
+  ContactFormBack (BuildContext context) {
     var parameter = ModalRoute.of(context)?.settings.arguments;
 
     //contact = (parameter == null) ? Contact() : parameter;
@@ -37,15 +30,14 @@ abstract class _ContactFormBack with Store{
       throw DomainLayerException('Invalid argument type passed to _ContactFormBack. Expected Contact but got ${parameter.runtimeType}');
     }
   }
-    //salvar contato
-  
-  @action
+
+  //salvar contato
   save() async {
     await _service.save(contact);
   }
 
-    //validações
-  @action
+  //validações
+
   String? validateName(String? name) {
     try {
       _service.validateName(name);
@@ -58,7 +50,7 @@ abstract class _ContactFormBack with Store{
     }
   }
 
-  @action
+
   String? validateEmail(String? email) {
     try {
       _service.validateEmail(email);
@@ -71,7 +63,7 @@ abstract class _ContactFormBack with Store{
     }
   }
 
-  @action
+
   String? validatePhone(String? phone) {
     try {
       _service.validatePhone(phone);
