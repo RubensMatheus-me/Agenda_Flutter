@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_agenda/app/app.dart';
 import 'package:flutter_agenda/app/domain/entities/contact.dart';
 import 'package:flutter_agenda/app/view/contact_list_back.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -81,7 +80,7 @@ class ContactList extends StatelessWidget{
                             leading: circleAvatar(contact?.url_avatar ?? ''),
                             title: Text(contact?.nome  ?? 'Unknown Contact'),
                             onTap: () {
-                             _back.goToDetails(context);
+                             _back.goToDetails(context, contact!);
                             },
                             subtitle: Text(contact?.telefone?? 'No phone number'),
                             trailing: SizedBox(

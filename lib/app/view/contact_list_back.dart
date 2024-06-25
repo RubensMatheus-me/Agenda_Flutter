@@ -33,8 +33,8 @@ goToForm(BuildContext context, [Contact? contact]) {
 
 }
 
-goToDetails(BuildContext context) {
-  Navigator.of(context).pushNamed(MyApp.CONTACT_DETAILS);
+goToDetails(BuildContext context, Contact contact) {
+  Navigator.of(context).pushNamed(MyApp.CONTACT_DETAILS, arguments: contact);
 }
 //excluir
 remove(int ?id) {
