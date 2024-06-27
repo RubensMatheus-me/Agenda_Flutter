@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "219016325411",
+    "project_id": "agendacontatos-94a28",
+    "storage_bucket": "agendacontatos-94a28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219016325411:android:834adebf171f8b52d6c496",
+        "android_client_info": {
+          "package_name": "com.example.flutter_agenda"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzkPhtSX7CTYia3lHZgfIMWXVE4gJ4x9w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

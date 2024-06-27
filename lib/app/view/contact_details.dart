@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_agenda/app/view/contact_details.back.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 import '../domain/entities/contact.dart';
 

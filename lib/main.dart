@@ -11,7 +11,8 @@ Future main() async {
   if(!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     sqfliteFfiInit();
   }
-  databaseFactory = databaseFactoryFfi;
-  setupInjection();
+  await setupInjection();
+
   runApp(MyApp());
+
 }

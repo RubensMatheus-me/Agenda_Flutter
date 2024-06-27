@@ -13,7 +13,7 @@ class ContactService{
     _dao.save(contact);
   }
 
-  remove(int? id) {
+  remove(dynamic id) {
     if (id == null) {
     throw DomainLayerException("ID cannot be null");
   }

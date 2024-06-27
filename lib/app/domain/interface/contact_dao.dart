@@ -7,5 +7,5 @@ abstract class ContactDAO{
 
   Future<List<Contact>> find();
 
-  remove(int id);
+  remove(dynamic id);
 }
